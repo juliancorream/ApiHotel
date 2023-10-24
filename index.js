@@ -1,7 +1,6 @@
 import "dotenv/config";
 import { Api } from "./Api.js";
-
-require("dotenv").config();
+//console.log(process.env); Probar variables de entorno
 
 //Para usar una clase debo crear un objeto
 //Para usar una clasese debe crear una instancia
