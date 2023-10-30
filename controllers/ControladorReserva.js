@@ -1,3 +1,4 @@
+import { ServicioHabitacion } from "../services/ServicioHabitacion.js";
 import { ServicioReserva } from "../services/ServicioReserva.js";
 
 export class ControladorReserva {
@@ -38,6 +39,7 @@ export class ControladorReserva {
   }
   async buscarReservaPorId(peticion, respuesta) {
     try {
+      let servicioReserva = new ServicioReserva();
       //1. Esculcar los parametros de la peticion
       let idReservaBuscar = peticion.params.id;
       //2. Validar el Dato
@@ -45,7 +47,7 @@ export class ControladorReserva {
       //4. Responder
       respuesta.status(200).json({
         Mensaje: "Exito en la operacion de Busqueda",
-        Datos: "Aca van los datos que se Buscaron",
+        Datos: await servicioReserva.buscarReservaPorId(idReservaBuscar),
       });
     } catch (error) {
       respuesta.status(400).json({
@@ -60,10 +62,14 @@ export class ControladorReserva {
       let datosReservaModificar = peticion.body;
       //2. validar los datos
       //3. intentar buscar y modificar en la base de datos
+      await servicioReserva.modificarReserva(
+        idReservaModificar,
+        datosReservaModificar
+      );
       //4. responder
       respuesta.status(200).json({
         Mensaje: "Exito en la operacion de Modificacion",
-        Datos: "Aca van los datos que se Modificaron",
+        Datos: datosReservaModificar,
       });
     } catch (error) {
       respuesta.status(400).json({
@@ -73,10 +79,12 @@ export class ControladorReserva {
   }
   async borrarReserva(peticion, respuesta) {
     try {
+      let servicioHabitacion= new ServicioHabitacion()
       let idReservaBorrar = peticion.params.id;
       //Validar
       //Intento Borrar Habitacion en la base de datos
       //Responder
+      await servicioHabitacion.borrarHabitacion(idReservaBorrar)
       respuesta.status(200).json({
         Mensaje: "Exito en la operacion de Borrado",
       });

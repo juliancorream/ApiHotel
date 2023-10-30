@@ -81,10 +81,12 @@ export class ControladorHabitacion {
   }
   async borrarHabitacion(peticion, respuesta) {
     try {
+      let servicioHabitacion = new ServicioHabitacion()
       let idHabitacionBorrar = peticion.params.id;
       //Validar
       //Intento Borrar Habitacion en la base de datos
       //Responder
+      await servicioHabitacion.borrarHabitacion(idHabitacionBorrar)
       respuesta.status(200).json({
         Mensaje: "Exito en la operacion de Borrado",
       });
